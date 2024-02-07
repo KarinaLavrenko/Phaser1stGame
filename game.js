@@ -72,7 +72,24 @@ function create ()
     });
     //Додали курсор
     cursors = this.input.keyboard.createCursorKeys()
+    //Додали зірки
+    stars = this.physics.add.group({
+        key: 'star',
+        repeat: 11,
+        setXY: { x: 12, y: 0, stepX: 70 }
+    });
 
+    stars.children.iterate(function (child) {
+
+        child.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8));
+
+    });
+    bombs = this.physics.add.group();
+    scoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
+    //Додали зіткнення зірок з платформою
+    this.physics.add.collider(player, platforms);
+    this.physics.add.collider(stars, platforms);
+    this.physics.add.collider(bombs, platforms);
 }
 
 function update ()
