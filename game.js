@@ -31,8 +31,7 @@ function preload() {
     this.load.image('ground', 'assets/platform.png');
     this.load.image('star', 'assets/star.png');
     this.load.image('bomb', 'assets/bomb.png');
-    this.load.spritesheet('dude',
-        'assets/dude.png',
+    this.load.spritesheet('dude','assets/dude.png',
         { frameWidth: 32, frameHeight: 48 }
     );
 }
@@ -134,22 +133,16 @@ function collectStar(player, star)
     score += 10;
     scoreText.setText('Score: ' + score);
 
-    if (stars.countActive(true) === 0)
-    {
-        stars.children.iterate(function (child) {
+    // Створили бомби
+    var x = Phaser.Math.Between(0, config.width);
+    var y = Phaser.Math.Between(0, config.height);
+    var bomb = bombs.create(x, y, 'bomb');
+    bomb.setScale(0.25);
+    bomb.setBounce(1);
+    bomb.setCollideWorldBounds(true);
+    bomb.setVelocity(Phaser.Math.Between(-200, 200), 20);
 
-            child.enableBody(true, child.x, 0, true, true);
-
-        });
-
-        var x = (player.x < 400) ? Phaser.Math.Between(400, 800) : Phaser.Math.Between(0, 400);
-
-        var bomb = bombs.create(x, 16, 'bomb');
-        bomb.setBounce(1);
-        bomb.setCollideWorldBounds(true);
-        bomb.setVelocity(Phaser.Math.Between(-200, 200), 20);
-        bomb.allowGravity = false;
-    }
+    
 }
     //Кінець гри
     function hitBomb(player, bomb) 
