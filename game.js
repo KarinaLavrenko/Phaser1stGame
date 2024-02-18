@@ -142,7 +142,14 @@ function collectStar(player, star)
     bomb.setCollideWorldBounds(true);
     bomb.setVelocity(Phaser.Math.Between(-200, 200), 20);
 
-    
+    if (stars.countActive(true) === 0)
+    {
+        // Створили зірки
+        stars.children.iterate(function (child) {
+            child.enableBody(true, child.x, 0, true, true);
+            child.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8));
+        });
+    }
 }
     //Кінець гри
     function hitBomb(player, bomb) 
